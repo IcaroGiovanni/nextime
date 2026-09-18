@@ -38,6 +38,278 @@
 
   ::selection{ background:var(--silver-1); color:#000; }
 
+  /* ---------- TOP BAR ---------- */
+  .top-bar{
+    width:100%;
+    overflow:hidden;
+    background:#08080a;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    position:relative;
+  }
+  .top-bar::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(120,200,255,0.15) 30%, rgba(180,140,255,0.2) 50%, rgba(120,200,255,0.15) 70%, transparent);
+  }
+  .top-bar-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:7px 32px;
+    font-size:0.68rem;
+    color:var(--text-dim);
+    letter-spacing:0.03em;
+  }
+  .top-bar-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+  }
+  .top-bar-status{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-weight:600;
+    color:var(--silver-3);
+  }
+  .top-bar-status-dot{
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#4ade80;
+    box-shadow:0 0 6px #4ade80;
+    animation:statusPulse 2s ease-in-out infinite;
+  }
+  @keyframes statusPulse{
+    0%,100%{ opacity:1; }
+    50%{ opacity:0.4; }
+  }
+  .top-bar-divider{
+    width:1px;
+    height:12px;
+    background:rgba(255,255,255,0.08);
+  }
+  .top-bar-info{
+    font-weight:500;
+  }
+  .top-bar-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+  }
+  .top-bar-right a{
+    color:var(--text-dim);
+    transition:color 0.25s;
+    display:flex;
+    align-items:center;
+    gap:5px;
+    font-weight:600;
+  }
+  .top-bar-right a:hover{ color:var(--silver-1); }
+  .top-bar-right svg{ width:12px; height:12px; }
+
+  /* animated line across top bar */
+  .top-bar-line{
+    position:absolute;
+    bottom:0;
+    left:0;
+    height:1px;
+    width:120px;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation:topBarScan 6s linear infinite;
+  }
+  @keyframes topBarScan{
+    0%{ left:-120px; }
+    100%{ left:100%; }
+  }
+
+  @media (max-width:640px){
+    .top-bar-inner{ padding:6px 16px; gap:12px; }
+    .top-bar-left{ gap:12px; }
+    .top-bar-right{ gap:12px; }
+    .top-bar-divider{ display:none; }
+    .top-bar-info{ display:none; }
+  }
+
+  /* ---------- ANNOUNCEMENT BAR ---------- */
+  .announcement-bar{
+    width:100%;
+    overflow:hidden;
+    background:linear-gradient(90deg, #050506 0%, #0a0a0f 25%, #0d0d14 50%, #0a0a0f 75%, #050506 100%);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .announcement-bar::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:60%;
+    height:100%;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+    animation:annScan 4s ease-in-out infinite;
+  }
+  .announcement-bar::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.12) 30%, rgba(120,200,255,0.2) 50%, rgba(255,255,255,0.12) 70%, transparent);
+    animation:annGlow 3s ease-in-out infinite alternate;
+  }
+  @keyframes annScan{
+    0%{ left:-60%; }
+    50%{ left:100%; }
+    100%{ left:100%; }
+  }
+  @keyframes annGlow{
+    0%{ opacity:0.4; }
+    100%{ opacity:1; }
+  }
+
+  .ann-inner{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    padding:10px 32px;
+    position:relative;
+  }
+
+  /* HUD corner decorations */
+  .ann-inner::before,
+  .ann-inner::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:1px;
+    height:18px;
+    background:linear-gradient(180deg, transparent, rgba(255,255,255,0.15), transparent);
+  }
+  .ann-inner::before{ left:0; }
+  .ann-inner::after{ right:0; }
+
+  .ann-badge{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:3px 12px 3px 8px;
+    border-radius:100px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.1);
+    font-size:0.65rem;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--silver-2);
+    white-space:nowrap;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .ann-badge-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#4ade80;
+    box-shadow:0 0 8px #4ade80, 0 0 20px rgba(74,222,128,0.3);
+    animation:annPulse 2s ease-in-out infinite;
+    flex-shrink:0;
+  }
+  @keyframes annPulse{
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:0.5; transform:scale(0.85); }
+  }
+
+  .ann-ticker{
+    flex:1;
+    overflow:hidden;
+    mask-image:linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image:linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+  .ann-ticker-track{
+    display:flex;
+    gap:60px;
+    animation:tickerScroll 25s linear infinite;
+    width:max-content;
+  }
+  .ann-item{
+    font-size:0.78rem;
+    font-weight:500;
+    color:var(--text-dim);
+    letter-spacing:0.01em;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .ann-item b{
+    color:var(--silver-1);
+    font-weight:700;
+  }
+  @keyframes tickerScroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-50%); }
+  }
+
+  .ann-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    padding:4px 14px;
+    border-radius:100px;
+    border:1px solid rgba(255,255,255,0.12);
+    background:rgba(255,255,255,0.04);
+    font-size:0.68rem;
+    font-weight:700;
+    color:var(--silver-2);
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    transition:all 0.3s ease;
+    white-space:nowrap;
+    flex-shrink:0;
+    cursor:pointer;
+  }
+  .ann-cta:hover{
+    background:rgba(255,255,255,0.1);
+    border-color:rgba(255,255,255,0.25);
+    color:var(--silver-1);
+  }
+  .ann-cta svg{
+    width:10px;
+    height:10px;
+    transition:transform 0.3s ease;
+  }
+  .ann-cta:hover svg{
+    transform:translateX(3px);
+  }
+
+  /* subtle scanline overlay */
+  .ann-scanlines{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:0.025;
+    background:repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.5) 2px,
+      rgba(255,255,255,0.5) 3px
+    );
+  }
+
+  @media (max-width:640px){
+    .ann-inner{ padding:8px 16px; gap:10px; }
+    .ann-item{ font-size:0.7rem; }
+    .ann-badge{ font-size:0.58rem; padding:2px 8px 2px 6px; }
+    .ann-cta{ font-size:0.6rem; padding:3px 10px; }
+  }
+
   /* grain overlay */
   body::before{
     content:"";
@@ -75,9 +347,11 @@
   }
 
   /* ---------- NAV ---------- */
-  header{
+  .site-header{
     position:fixed; top:0; left:0; right:0;
     z-index:100;
+  }
+  header{
     backdrop-filter:blur(14px);
     background:rgba(5,5,6,0.6);
     border-bottom:1px solid var(--line-soft);
@@ -87,17 +361,45 @@
     padding:18px 32px;
   }
   .logo{
-    display:flex; align-items:baseline; gap:8px;
-    font-family:'Anton', sans-serif;
-    font-size:1.3rem;
-    letter-spacing:0.02em;
+    display:flex; align-items:center;
+    position:relative;
+    animation:logoIn 1s ease-out both;
   }
-  .logo span{
-    font-family:'Manrope', sans-serif;
-    font-weight:800;
-    font-size:0.7rem;
-    letter-spacing:0.28em;
-    color:var(--text-dim);
+  .logo img{
+    height:68px;
+    width:auto;
+    object-fit:contain;
+    position:relative;
+    z-index:1;
+    transition:filter 0.4s ease, transform 0.4s ease;
+    filter:grayscale(0.3) brightness(0.9);
+  }
+  .logo::after{
+    content:"";
+    position:absolute;
+    top:-20%;
+    left:-30%;
+    width:50%;
+    height:140%;
+    background:linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.35) 45%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.35) 55%, transparent 70%);
+    transform:skewX(-20deg);
+    z-index:2;
+    pointer-events:none;
+    animation:logoSheen 5s ease-in-out infinite;
+  }
+  .logo:hover img{
+    filter:grayscale(0) brightness(1.1);
+    transform:scale(1.04);
+  }
+  @keyframes logoSheen{
+    0%,100%{ left:-60%; opacity:0; }
+    40%{ left:-60%; opacity:0; }
+    55%{ left:120%; opacity:1; }
+    70%{ left:120%; opacity:0; }
+  }
+  @keyframes logoIn{
+    0%{ opacity:0; transform:translateX(-20px); }
+    100%{ opacity:1; transform:translateX(0); }
   }
   .nav-links{
     display:flex; gap:40px;
@@ -122,7 +424,7 @@
   .hero{
     min-height:100svh;
     display:flex; flex-direction:column; justify-content:center;
-    padding-top:120px; padding-bottom:80px;
+    padding-top:160px; padding-bottom:80px;
     overflow:hidden;
   }
   .ghost-mark{
@@ -191,16 +493,92 @@
   .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; }
   .btn{
     display:inline-flex; align-items:center; gap:10px;
-    padding:15px 28px;
+    padding:15px 32px;
     border-radius:100px;
     font-weight:700;
     font-size:0.88rem;
-    transition:transform .25s, background .25s, color .25s, border-color .25s;
+    position:relative;
+    overflow:hidden;
+    transition:transform .3s ease, box-shadow .3s ease;
+    cursor:pointer;
   }
-  .btn-solid{ background:var(--silver-1); color:#000; }
-  .btn-solid:hover{ transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,255,255,0.15); }
-  .btn-ghost{ border:1px solid var(--line); color:var(--text); }
-  .btn-ghost:hover{ border-color:var(--silver-1); color:var(--silver-1); transform:translateY(-2px); }
+  .btn-solid{
+    background:linear-gradient(135deg, #fff 0%, #d4d4d8 50%, #fff 100%);
+    background-size:200% 200%;
+    color:#000;
+    border:none;
+    animation:btnGradient 4s ease infinite;
+  }
+  .btn-solid::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius:100px;
+    background:linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1), rgba(255,255,255,0.4));
+    z-index:-1;
+    opacity:0;
+    transition:opacity 0.3s ease;
+  }
+  .btn-solid::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:120%;
+    height:120%;
+    transform:translate(-50%,-50%) rotate(0deg);
+    background:conic-gradient(from 0deg, transparent, rgba(255,255,255,0.15), transparent, rgba(255,255,255,0.15), transparent);
+    animation:btnSpin 4s linear infinite;
+    opacity:0;
+    transition:opacity 0.3s ease;
+    z-index:-1;
+  }
+  .btn-solid:hover{
+    transform:translateY(-3px) scale(1.02);
+    box-shadow:
+      0 4px 20px rgba(255,255,255,0.2),
+      0 8px 40px rgba(255,255,255,0.1),
+      0 0 60px rgba(255,255,255,0.05);
+  }
+  .btn-solid:hover::before{ opacity:1; }
+  .btn-solid:hover::after{ opacity:1; }
+  @keyframes btnGradient{
+    0%,100%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+  }
+  @keyframes btnSpin{
+    0%{ transform:translate(-50%,-50%) rotate(0deg); }
+    100%{ transform:translate(-50%,-50%) rotate(360deg); }
+  }
+
+  .btn-ghost{
+    border:1px solid var(--line);
+    color:var(--text);
+    background:transparent;
+  }
+  .btn-ghost::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:100px;
+    background:linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+    opacity:0;
+    transition:opacity 0.3s ease;
+  }
+  .btn-ghost:hover{
+    border-color:var(--silver-1);
+    color:var(--silver-1);
+    transform:translateY(-3px);
+    box-shadow:0 4px 20px rgba(255,255,255,0.08);
+  }
+  .btn-ghost:hover::before{ opacity:1; }
+
+  .btn-arrow{
+    transition:transform 0.3s ease;
+  }
+  .btn:hover .btn-arrow{
+    transform:translateX(4px);
+  }
 
   /* ---------- SECTION HEAD ---------- */
   .section-head{ text-align:center; margin-bottom:64px; }
@@ -209,6 +587,331 @@
     font-family:'Anton', sans-serif;
     font-size:clamp(2.2rem, 5vw, 3.6rem);
     letter-spacing:0.01em;
+  }
+
+  /* ---------- APP DEV SECTION ---------- */
+  .app-dev{
+    padding:120px 0;
+    border-top:1px solid var(--line-soft);
+    position:relative;
+    overflow:hidden;
+  }
+  .app-dev::before{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, rgba(120,200,255,0.04) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .app-dev-head{
+    text-align:center;
+    margin-bottom:64px;
+    position:relative;
+    z-index:1;
+  }
+  .app-dev-head .eyebrow{ margin-bottom:14px; }
+  .app-dev-head h2{
+    font-family:'Anton', sans-serif;
+    font-size:clamp(2.2rem, 5vw, 3.6rem);
+    letter-spacing:0.01em;
+    margin-bottom:16px;
+  }
+  .app-dev-head p{
+    max-width:520px;
+    margin:0 auto;
+    color:var(--text-dim);
+    font-size:1rem;
+    line-height:1.7;
+  }
+
+  .app-dev-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    position:relative;
+    z-index:1;
+  }
+  .app-dev-card{
+    background:var(--card);
+    padding:36px 28px;
+    position:relative;
+    transition:background 0.3s ease;
+    cursor:default;
+  }
+  .app-dev-card:hover{ background:#141416; }
+  .app-dev-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:2px;
+    background:linear-gradient(90deg, transparent, rgba(120,200,255,0.3), transparent);
+    opacity:0;
+    transition:opacity 0.3s ease;
+  }
+  .app-dev-card:hover::before{ opacity:1; }
+
+  .app-dev-icon{
+    width:52px;
+    height:52px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:20px;
+    color:var(--silver-2);
+    transition:border-color 0.3s, color 0.3s, transform 0.3s;
+  }
+  .app-dev-card:hover .app-dev-icon{
+    border-color:rgba(120,200,255,0.4);
+    color:var(--silver-1);
+    transform:translateY(-3px);
+  }
+  .app-dev-icon svg{ width:24px; height:24px; }
+
+  .app-dev-card h3{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    font-size:1.15rem;
+    letter-spacing:0.03em;
+    margin-bottom:8px;
+    color:var(--silver-1);
+  }
+  .app-dev-card p{
+    font-size:0.88rem;
+    line-height:1.6;
+    color:var(--text-dim);
+  }
+
+  .app-dev-foot{
+    text-align:center;
+    margin-top:48px;
+    position:relative;
+    z-index:1;
+  }
+
+  @media (max-width:900px){ .app-dev-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:600px){ .app-dev-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- SITES SECTION ---------- */
+  .sites{
+    padding:120px 0;
+    border-top:1px solid var(--line-soft);
+    position:relative;
+    overflow:hidden;
+    background:var(--bg-soft);
+  }
+  .sites::before{
+    content:"";
+    position:absolute;
+    top:-200px;
+    right:-200px;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle, rgba(180,140,255,0.05) 0%, transparent 70%);
+    pointer-events:none;
+  }
+
+  .sites-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+  }
+
+  .sites-text .eyebrow{ margin-bottom:14px; }
+  .sites-text h2{
+    font-family:'Anton', sans-serif;
+    font-size:clamp(2.4rem, 5vw, 3.8rem);
+    line-height:0.95;
+    letter-spacing:0.01em;
+    margin-bottom:20px;
+  }
+  .sites-text h2 .highlight{
+    position:relative;
+    display:inline-block;
+  }
+  .sites-text h2 .highlight::after{
+    content:"";
+    position:absolute;
+    bottom:2px;
+    left:0;
+    width:100%;
+    height:8px;
+    background:linear-gradient(90deg, rgba(120,200,255,0.3), rgba(180,140,255,0.3));
+    border-radius:4px;
+    z-index:-1;
+  }
+  .sites-text p{
+    color:var(--text-dim);
+    font-size:1.02rem;
+    line-height:1.7;
+    margin-bottom:32px;
+    max-width:440px;
+  }
+  .sites-text p b{ color:var(--silver-1); font-weight:700; }
+
+  .sites-price{
+    display:inline-flex;
+    align-items:center;
+    gap:14px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px 28px;
+    margin-bottom:36px;
+  }
+  .sites-price-tag{
+    font-family:'Anton', sans-serif;
+    font-size:2.2rem;
+    letter-spacing:0.01em;
+    color:var(--silver-1);
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .sites-price-tag span{
+    font-family:'Manrope', sans-serif;
+    font-size:0.75rem;
+    font-weight:600;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+  }
+  .sites-price-desc{
+    font-size:0.82rem;
+    color:var(--text-dim);
+    line-height:1.4;
+    max-width:200px;
+  }
+
+  .sites-features{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-bottom:36px;
+  }
+  .sites-feature{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:0.9rem;
+    color:var(--text);
+  }
+  .sites-feature-check{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:rgba(74,222,128,0.1);
+    border:1px solid rgba(74,222,128,0.25);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    color:#4ade80;
+  }
+  .sites-feature-check svg{ width:12px; height:12px; }
+
+  /* preview cards */
+  .sites-preview{
+    position:relative;
+  }
+  .sites-cards{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/3;
+  }
+  .site-card{
+    position:absolute;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    transition:transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .site-card:hover{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  }
+  .site-card-bar{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:10px 14px;
+    background:rgba(255,255,255,0.03);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .site-card-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+  }
+  .site-card-dot:nth-child(1){ background:#ff5f57; }
+  .site-card-dot:nth-child(2){ background:#ffbd2e; }
+  .site-card-dot:nth-child(3){ background:#28c840; }
+  .site-card-url{
+    flex:1;
+    margin-left:8px;
+    padding:4px 10px;
+    border-radius:6px;
+    background:rgba(255,255,255,0.05);
+    font-size:0.65rem;
+    color:var(--text-dim);
+    font-weight:500;
+  }
+  .site-card-body{
+    padding:20px;
+    min-height:120px;
+  }
+  .site-card-line{
+    height:8px;
+    border-radius:4px;
+    background:rgba(255,255,255,0.06);
+    margin-bottom:10px;
+  }
+  .site-card-line.short{ width:40%; }
+  .site-card-line.med{ width:65%; }
+  .site-card-line.long{ width:90%; }
+  .site-card-block{
+    display:grid;
+    gap:8px;
+    margin-top:16px;
+  }
+  .site-card-block-cols{ grid-template-columns:1fr 1fr; }
+  .site-card-block-item{
+    height:40px;
+    border-radius:8px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--line-soft);
+  }
+
+  .site-card.card-1{
+    top:0; left:0;
+    width:85%;
+    z-index:2;
+  }
+  .site-card.card-2{
+    bottom:0; right:0;
+    width:75%;
+    z-index:1;
+    opacity:0.7;
+  }
+  .site-card.card-2:hover{ opacity:1; }
+
+  @media (max-width:900px){
+    .sites-layout{ grid-template-columns:1fr; gap:48px; }
+    .sites-preview{ max-width:500px; margin:0 auto; }
   }
 
   /* ---------- VALUES ---------- */
@@ -299,6 +1002,105 @@
   }
   @media (max-width:520px){ .services-row{ grid-template-columns:repeat(2,1fr); } }
 
+  /* ---------- FAQ ---------- */
+  .faq{
+    padding:120px 0;
+    border-top:1px solid var(--line-soft);
+    position:relative;
+  }
+  .faq::before{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:500px;
+    height:400px;
+    background:radial-gradient(circle, rgba(120,200,255,0.03) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .faq .section-head{ margin-bottom:56px; }
+
+  .faq-list{
+    max-width:720px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .faq-item{
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    background:var(--card);
+    transition:border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .faq-item:hover{
+    border-color:rgba(255,255,255,0.12);
+  }
+  .faq-item.active{
+    border-color:rgba(120,200,255,0.2);
+    box-shadow:0 4px 24px rgba(0,0,0,0.2);
+  }
+  .faq-question{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:22px 26px;
+    cursor:pointer;
+    font-size:0.95rem;
+    font-weight:600;
+    color:var(--silver-2);
+    transition:color 0.3s ease;
+    user-select:none;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    font-family:inherit;
+  }
+  .faq-question:hover{ color:var(--silver-1); }
+  .faq-item.active .faq-question{ color:var(--silver-1); }
+
+  .faq-icon{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    transition:background 0.3s, border-color 0.3s, transform 0.3s;
+  }
+  .faq-item.active .faq-icon{
+    background:rgba(120,200,255,0.1);
+    border-color:rgba(120,200,255,0.3);
+    transform:rotate(45deg);
+  }
+  .faq-icon svg{ width:14px; height:14px; }
+
+  .faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.4s ease, padding 0.4s ease;
+  }
+  .faq-item.active .faq-answer{
+    max-height:300px;
+  }
+  .faq-answer-inner{
+    padding:0 26px 22px;
+    font-size:0.9rem;
+    line-height:1.7;
+    color:var(--text-dim);
+  }
+
+  @media (max-width:640px){
+    .faq-question{ padding:18px 20px; font-size:0.88rem; }
+    .faq-answer-inner{ padding:0 20px 18px; font-size:0.85rem; }
+  }
+
   /* ---------- CTA ---------- */
   .cta{
     padding:150px 0 100px;
@@ -347,10 +1149,10 @@
     flex-wrap:wrap; gap:16px;
     font-size:0.8rem; color:var(--text-dim);
   }
-  .footer-bottom .flogo{
-    font-family:'Anton', sans-serif;
-    font-size:1rem;
-    color:var(--silver-2);
+  .footer-bottom .flogo img{
+    height:24px;
+    width:auto;
+    object-fit:contain;
   }
   .socials{ display:flex; gap:18px; }
   .socials a{ color:var(--text-dim); transition:color .2s; }
@@ -369,9 +1171,30 @@
 </head>
 <body>
 
+<div class="site-header">
+<div class="top-bar">
+  <div class="top-bar-line"></div>
+  <div class="top-bar-inner">
+    <div class="top-bar-left">
+      <div class="top-bar-status">
+        <span class="top-bar-status-dot"></span>
+        Chame nossos consultores e cresça seu projeto em até 10x
+      </div>
+      <div class="top-bar-divider"></div>
+      <span class="top-bar-info">Horário de atendimento: Seg — Sex, 09h às 18h</span>
+    </div>
+    <div class="top-bar-right">
+      <a href="https://instagram.com/nextime.brasil" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
+        @nextime.brasil
+      </a>
+    </div>
+  </div>
+</div>
+
 <header>
   <nav class="nav wrap">
-    <div class="logo">NT<span>NEXTIME</span></div>
+    <a href="#" class="logo"><img src="logosemfundonex.png" alt="NT Nextime" height="68"></a>
     <ul class="nav-links">
       <li><a href="#valores">Sobre</a></li>
       <li><a href="#servicos">Serviços</a></li>
@@ -380,6 +1203,29 @@
     <a href="https://wa.me/5531983837441?text=Ol%C3%A1%2C%20quero%20crescer%20minha%20marca" class="nav-cta" target="_blank" rel="noopener">Fale com a gente</a>
   </nav>
 </header>
+
+<div class="announcement-bar">
+  <div class="ann-scanlines"></div>
+  <div class="ann-inner">
+    <div class="ann-badge">
+      <span class="ann-badge-dot"></span>
+      Novidade
+    </div>
+    <div class="ann-ticker">
+      <div class="ann-ticker-track">
+        <span class="ann-item">Gestão de tráfego com <b>Inteligência Artificial</b> — Resultados 3x mais rápidos</span>
+        <span class="ann-item">Nova sprint de <b>Social Media</b> com criativos de alta performance</span>
+        <span class="ann-item"><b>Automação de funis</b> — Converta 5x mais com menos esforço</span>
+        <span class="ann-item">Lançamento: <b>Gestão de tráfego com IA</b> — Resultados 3x mais rápidos</span>
+      </div>
+    </div>
+    <a href="#contato" class="ann-cta">
+      Saiba mais
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </div>
+</div>
+</div>
 
 <section class="hero">
   <div class="ghost-mark one">NT</div>
@@ -398,8 +1244,169 @@
     </div>
 
     <div class="hero-ctas">
-      <a href="https://wa.me/5531983837441?text=Ol%C3%A1%2C%20quero%20crescer%20minha%20marca" class="btn btn-solid" target="_blank" rel="noopener">Iniciar um projeto</a>
+      <a href="https://wa.me/5531983837441?text=Ol%C3%A1%2C%20quero%20crescer%20minha%20marca" class="btn btn-solid" target="_blank" rel="noopener">Iniciar um projeto <span class="btn-arrow">&rarr;</span></a>
       <a href="#servicos" class="btn btn-ghost">Ver soluções</a>
+    </div>
+  </div>
+</section>
+
+<section class="app-dev" id="apps">
+  <div class="wrap">
+    <div class="app-dev-head reveal">
+      <div class="eyebrow">Desenvolvimento</div>
+      <h2>Tire seu aplicativo /<br>sistema web do papel</h2>
+      <p>Do conceito ao código, criamos soluções digitais sob medida que escalam seu negócio.</p>
+    </div>
+
+    <div class="app-dev-grid reveal">
+      <div class="app-dev-card">
+        <div class="app-dev-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12" y2="18.01"/>
+          </svg>
+        </div>
+        <h3>App Mobile</h3>
+        <p>Aplicativos nativos e híbridos para iOS e Android com performance e UX impecáveis.</p>
+      </div>
+
+      <div class="app-dev-card">
+        <div class="app-dev-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <h3>Web App</h3>
+        <p>Aplicações web completas, responsivas e rápidas que rodam em qualquer navegador.</p>
+      </div>
+
+      <div class="app-dev-card">
+        <div class="app-dev-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </div>
+        <h3>Dashboard</h3>
+        <p>Painéis inteligentes com gráficos, KPIs e dados em tempo real para decisões assertivas.</p>
+      </div>
+
+      <div class="app-dev-card">
+        <div class="app-dev-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <h3>SaaS</h3>
+        <p>Plataformas escaláveis como serviço com billing, multi-tenant e analytics integrados.</p>
+      </div>
+
+      <div class="app-dev-card">
+        <div class="app-dev-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <h3>API & Backend</h3>
+        <p>APIs robustas e escaláveis que conectam seus sistemas e automatizam processos.</p>
+      </div>
+
+      <div class="app-dev-card">
+        <div class="app-dev-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <h3>Sistema sob demanda</h3>
+        <p>Soluções 100% personalizadas do zero, feitas sob medida para sua operação.</p>
+      </div>
+    </div>
+
+    <div class="app-dev-foot reveal">
+      <a href="https://wa.me/5531983837441?text=Ol%C3%A1%2C%20quero%20desenvolver%20um%20sistema" class="btn btn-solid" target="_blank" rel="noopener">Quero meu sistema <span class="btn-arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sites" id="sites">
+  <div class="wrap">
+    <div class="sites-layout reveal">
+      <div class="sites-text">
+        <div class="eyebrow">Seu produto</div>
+        <h2>Seu site,<br><span class="highlight">Sua cara.</span></h2>
+        <p>Sites profissionais, rápidos e <b>100% personalizados</b> para sua marca. Do layout ao código, tudo feito sob medida.</p>
+
+        <div class="sites-price">
+          <div class="sites-price-tag"><span>a partir de</span>R$200</div>
+          <div class="sites-price-desc">Sites prontos para converter visitantes em clientes</div>
+        </div>
+
+        <div class="sites-features">
+          <div class="sites-feature">
+            <div class="sites-feature-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            Design 100% personalizado
+          </div>
+          <div class="sites-feature">
+            <div class="sites-feature-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            Responsivo para todos os dispositivos
+          </div>
+          <div class="sites-feature">
+            <div class="sites-feature-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            Otimizado para Google (SEO)
+          </div>
+          <div class="sites-feature">
+            <div class="sites-feature-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            Entrega em até 7 dias
+          </div>
+        </div>
+
+        <a href="https://wa.me/5531983837441?text=Ol%C3%A1%2C%20quero%20um%20site" class="btn btn-solid" target="_blank" rel="noopener">Quero meu site <span class="btn-arrow">&rarr;</span></a>
+      </div>
+
+      <div class="sites-preview">
+        <div class="sites-cards">
+          <div class="site-card card-1">
+            <div class="site-card-bar">
+              <span class="site-card-dot"></span>
+              <span class="site-card-dot"></span>
+              <span class="site-card-dot"></span>
+              <span class="site-card-url">seusite.com.br</span>
+            </div>
+            <div class="site-card-body">
+              <div class="site-card-line short"></div>
+              <div class="site-card-line long"></div>
+              <div class="site-card-line med"></div>
+              <div class="site-card-block site-card-block-cols">
+                <div class="site-card-block-item"></div>
+                <div class="site-card-block-item"></div>
+              </div>
+            </div>
+          </div>
+          <div class="site-card card-2">
+            <div class="site-card-bar">
+              <span class="site-card-dot"></span>
+              <span class="site-card-dot"></span>
+              <span class="site-card-dot"></span>
+              <span class="site-card-url">loja.com.br</span>
+            </div>
+            <div class="site-card-body">
+              <div class="site-card-line med"></div>
+              <div class="site-card-line long"></div>
+              <div class="site-card-line short"></div>
+              <div class="site-card-block site-card-block-cols">
+                <div class="site-card-block-item"></div>
+                <div class="site-card-block-item"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -555,13 +1562,84 @@
   </div>
 </section>
 
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Dúvidas</div>
+      <h2>Perguntas<br>frequentes</h2>
+    </div>
+
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-question">
+          Quanto tempo leva para entregar um site?
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Sites fixos são entregues em até 7 dias úteis. Projetos personalizados como sistemas e apps têm prazo definido no briefing, geralmente entre 2 e 8 semanas.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Vocês trabalham com qual tipo de empresa?
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Trabalhamos com empresas de todos os portes — de pequenos negócios locais a grandes marcas. O que importa é a vontade de crescer e construir algo consistente.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          O que está incluído no site a partir de R$200?
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Design exclusivo, site responsivo, otimização para SEO, formulário de contato, certificado SSL e hospedagem configurada. Tudo pronto para você divulgar.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Vocês fazem gestão de tráfego pago?
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Sim. Gerenciamos campanhas no Google Ads, Meta Ads e outras plataformas com foco em ROI. Acompanhamento semanal e relatórios de performance inclusos.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Como funciona o processo de trabalho?
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Começamos com um diagnóstico, depois criamos a estratégia, seguimos para criação e desenvolvimento, e por fim entregamos com suporte. Você acompanha cada etapa.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Posso solicitar alterações depois da entrega?
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Sim. Oferecemos um período de ajustes pós-entrega. Depois disso, você pode contratar nosso suporte contínuo para atualizações e melhorias.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="cta" id="contato">
   <div class="wrap reveal">
     <div class="eyebrow" style="margin-bottom:18px;">Vamos conversar</div>
     <h2 class="chrome">Pronto para construir<br>o próximo capítulo?</h2>
     <p>Conte um pouco sobre o seu negócio e vamos desenhar juntos a estratégia certa para o seu crescimento.</p>
     <div class="cta-ctas">
-      <a href="https://wa.me/5531983837441?text=Ol%C3%A1%2C%20quero%20crescer%20minha%20marca" class="btn btn-solid" target="_blank" rel="noopener">Falar no WhatsApp</a>
+      <a href="https://wa.me/5531983837441?text=Ol%C3%A1%2C%20quero%20crescer%20minha%20marca" class="btn btn-solid" target="_blank" rel="noopener">Falar no WhatsApp <span class="btn-arrow">&rarr;</span></a>
       <a href="https://instagram.com/nextime.brasil" class="btn btn-ghost" target="_blank" rel="noopener">@nextime.brasil</a>
     </div>
   </div>
@@ -609,7 +1687,7 @@
     </div>
 
     <div class="footer-bottom">
-      <div class="flogo">NT NEXTIME</div>
+      <div class="flogo"><img src="logosemfundonex.png" alt="NT Nextime" height="24"></div>
       <div>&copy; <span id="year"></span> NT Nextime. Todos os direitos reservados.</div>
       <div class="socials">
         <a href="https://instagram.com/nextime.brasil" target="_blank" rel="noopener" aria-label="Instagram">
@@ -625,6 +1703,15 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  document.querySelectorAll('.faq-question').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item = btn.parentElement;
+      const isActive = item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active'));
+      if(!isActive) item.classList.add('active');
+    });
+  });
 
   const reveals = document.querySelectorAll('.reveal');
   if('IntersectionObserver' in window){
